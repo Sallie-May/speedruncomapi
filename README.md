@@ -349,7 +349,7 @@ Get Moderations Runs
 ```py
 moderation_runs = api.get_moderation_runs(
     game_id='game_id_here',
-    verified=0,  # 0: unverified, 1: verified, 2: rejected
+    verified=0,  # No verified parameter: Everything, 0: unverified, 1: verified, 2: rejected
     page=1,
     limit=20
 )
