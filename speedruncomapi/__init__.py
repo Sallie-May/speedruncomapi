@@ -647,6 +647,7 @@ class HiddenAPI:
     BASE_URL = "https://www.speedrun.com/api/v2/PutConversation"
     BASE_MESSAGES_URL = "https://www.speedrun.com/api/v2/GetConversationMessages"
     BASE_CONVERSATIONS_URL = "https://www.speedrun.com/api/v2/GetConversations"
+    BASE_URL_GET_MODERATION_RUNS = "https://www.speedrun.com/api/v2/GetModerationRuns"
 
     def __init__(self, csrf_token, cookie_session):
 
@@ -736,6 +737,45 @@ class HiddenAPI:
         }
 
         response = requests.post(self.BASE_CONVERSATIONS_URL, json=data, headers=headers)
+
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return {
+                "error": response.status_code,
+                "message": response.json()
+            }
+    def get_moderation_runs(self, game_id, verified_state='all', verified_by_id=None, search='', page=1, limit=20):
+
+        if verified_state not in ['all', 'unverified', 'verified', 'rejected']:
+            return {"error": "Invalid verified_state. Choose from 'all', 'unverified', 'verified', 'rejected'."}
+
+        verified_mapping = {
+            'all': None,
+            'unverified': 0,
+            'verified': 1,
+            'rejected': 2
+        }
+
+        headers = {
+            'Content-Type': 'application/json',
+            'Cookie': f'PHPSESSID={self.cookie_session}',
+            'Accept': 'application/json'
+        }
+
+        data = {
+            'gameId': game_id,
+            'limit': limit,
+            'page': page,
+            'search': search,
+            'verifiedById': verified_by_id
+        }
+
+        verified_value = verified_mapping[verified_state]
+        if verified_value is not None:
+            data['verified'] = verified_value
+
+        response = requests.post(self.BASE_URL_GET_MODERATION_RUNS, json=data, headers=headers)
 
         if response.status_code == 200:
             return response.json()
