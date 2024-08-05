@@ -1,6 +1,8 @@
 # Speedrun API Wrapper
 This Python package provides a convenient wrapper for the Speedrun API. It simplifies the process of interacting with the API by offering classes and methods for accessing user, game, run, and various other Speedrun-related data!
 
+If I forgot some API tell me, i'll work on it.
+
 Installation
 
 you can install it using pip:
