@@ -344,6 +344,18 @@ Get Conversation Messages
 messages = hidden_api.get_conversation_messages(conversation_id="conversation_id", mark_as_read=True)
 print(messages)
 ```
+Get Moderations Runs
+
+```py
+moderation_runs = api.get_moderation_runs(
+    game_id='game_id_here',
+    verified=0,  # 0: unverified, 1: verified, 2: rejected
+    page=1,
+    limit=20
+)
+print(moderation_runs)
+
+```
 ## Contributing
 Contributions are welcome! Please fork the repository and submit a pull request with your changes. Ensure that your code adheres to the existing coding style and includes appropriate tests.
 
